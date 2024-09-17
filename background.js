@@ -41,16 +41,48 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   }
 });
 
+function createCoinglassUrl(pair) {
+  // ペアから / を除去し、Binance_ プレフィックスを追加
+  const formattedPair = "Binance_" + pair.replace("/", "");
+  return `https://www.coinglass.com/tv/${formattedPair}`;
+}
+
 function sendToDiscord(webhookUrl, title, message) {
+  // メッセージから #{pair}# を抽出
+  const pairMatch = message.match(/#(.*?)#/);
+  let content = message;
+  let url = "";
+
+  if (pairMatch) {
+    const pair = pairMatch[1];
+    url = createCoinglassUrl(pair);
+    // メッセージから #{pair}# を除去
+    content = message.replace(/#.*?#/, "").trim();
+  }
+
+  const payload = {
+    embeds: [
+      {
+        title: title,
+        description: url ? `[${content}](${url})` : content,
+        color: 5814783, // 青色
+      },
+    ],
+  };
+
   console.log("Sending to Discord:", title, message);
   return fetch(webhookUrl, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({
-      content: `**${title}**\n${message}`,
-    }),
+    body: JSON.stringify(
+      url
+        ? payload
+        : {
+            content: `**${title}**\n${message}`,
+          }
+    ),
   });
 }
 
