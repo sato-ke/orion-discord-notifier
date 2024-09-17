@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>Orion Notify Bridge Settings</title>
+	<style>
+		body {
+			width: 300px;
+			padding: 10px;
+		}
+
+		label,
+		input {
+			display: block;
+			margin-bottom: 10px;
+		}
+
+		input[type="text"] {
+			width: 100%;
+		}
+	</style>
+</head>
+
+<body>
+	<label>
+		Discord Webhook URL:
+		<input type="text" id="webhookUrl">
+	</label>
+	<label>
+		Excluded Pairs (comma separated):
+		<input type="text" id="excludedPairs" placeholder="e.g. BTC/USDT,ETH/USDT">
+	</label>
+	<label>
+		<input type="checkbox" id="isActive">
+		Active
+	</label>
+	<button id="save">Save</button>
+	<script src="popup.js"></script>
+</body>
+
+</html>

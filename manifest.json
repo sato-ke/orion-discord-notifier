@@ -1,0 +1,31 @@
+{
+  "manifest_version": 3,
+  "name": "Orion Notify Bridge",
+  "version": "1.0",
+  "description": "Bridges notifications from Orion Terminal to Discord",
+  "permissions": [
+    "storage"
+  ],
+  "host_permissions": [
+    "https://orionterminal.com/*"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://orionterminal.com/*"],
+      "js": ["content.js"],
+      "run_at": "document_start"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["injected.js"],
+      "matches": ["https://orionterminal.com/*"]
+    }
+  ],
+  "action": {
+    "default_popup": "popup.html"
+  }
+}
