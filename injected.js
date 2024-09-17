@@ -27,4 +27,10 @@
   window.Notification.prototype = OriginalNotification.prototype;
 
   console.log("Notification API has been hooked");
+
+  window.testNotification = function () {
+    new Notification("Test Notification", {
+      body: "BTC/USDT hit 8010 > 8000",
+    });
+  };
 })();

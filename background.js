@@ -9,8 +9,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
             .split(",")
             .map((pair) => pair.trim());
           const shouldExclude = excludedPairs.some((pair) => {
-            console.log(`message: ${message.message} pair: ${pair}`);
-            message.message.includes(pair);
+            return message.message.includes(pair);
           });
 
           if (shouldExclude) {
